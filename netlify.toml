@@ -1,0 +1,6 @@
+[build.environment]
+  PYTHON_VERSION = "3.9"
+
+[build]
+  command = "pip install -r requirements.txt && python your_build_script.py"
+  publish = "dist"
