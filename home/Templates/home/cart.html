@@ -60,16 +60,113 @@
 <div class="chuagiohang">
     <!-- tiếp tục mua sắm -->
     <div class="tieude">
-        <h4 class="tdgh">Giỏ hàng của bạn hiện có ({{ total_items }} sản phẩm)</h4 class="tdgh">
-        <!-- có thêm icon mũi tên -->
+        <div class="cart-title-group">
+            <h4 class="tdgh">Giỏ hàng của bạn hiện có ({{ total_items }} sản phẩm)</h4>
+            <div class="select-all-container">
+                
+            </div>
+        </div>
         <a href="{% url 'home' %}" class="btnvipro">Tiếp tục mua sắm</a>
-        <!-- end tiếp tục mua sắm -->
-
     </div>
+    <style>
+        .cart-title-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .select-all-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .select-all-container input[type="checkbox"] {
+            cursor: pointer;
+        }
+        
+        .select-all-container label {
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+        }
+        .chuatc{
+            display: flex;
+            justify-content: start;
+            gap: 5px;
+            padding-left: 10px;
+            align-items: center;
+        }
+        </style>
+        
+        <!-- JavaScript cho chức năng Select All -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const itemCheckboxes = document.querySelectorAll('.cart-item .check-box');
+            
+            // Khi click vào checkbox "Chọn tất cả"
+            selectAllCheckbox.addEventListener('change', function() {
+                const isChecked = this.checked;
+                
+                // Cập nhật trạng thái tất cả các checkbox sản phẩm
+                itemCheckboxes.forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                });
+                
+                // Tính lại tổng tiền
+                calculateTotal();
+            });
+            
+            // Khi click vào checkbox của từng sản phẩm
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Kiểm tra xem tất cả checkbox sản phẩm có được chọn không
+                    const allChecked = Array.from(itemCheckboxes).every(cb => cb.checked);
+                    
+                    // Cập nhật trạng thái checkbox "Chọn tất cả"
+                    selectAllCheckbox.checked = allChecked;
+                    
+                    // Tính lại tổng tiền
+                    calculateTotal();
+                });
+            });
+            
+            // Hàm tính tổng tiền dựa trên các sản phẩm được chọn
+            function calculateTotal() {
+                let total = 0;
+                
+                itemCheckboxes.forEach((checkbox, index) => {
+                    if (checkbox.checked) {
+                        // Lấy thẻ cha chứa thông tin sản phẩm
+                        const cartItem = checkbox.closest('.cart-item');
+                        
+                        // Lấy giá trị tổng cộng của sản phẩm (cần xử lý chuỗi để chuyển về số)
+                        const totalText = cartItem.querySelector('.total').textContent;
+                        const totalValue = parseInt(totalText.replace(/[^\d]/g, ''));
+                        
+                        // Cộng vào tổng
+                        total += totalValue;
+                    }
+                });
+                
+                // Hiển thị tổng tiền với định dạng VND
+                const formattedTotal = new Intl.NumberFormat('vi-VN').format(total) + '₫';
+                document.querySelector('.tongtien').textContent = formattedTotal;
+            }
+            
+            // Khởi tạo tính toán tổng tiền ban đầu
+            calculateTotal();
+        });
+        </script>
     <div class="cart-wrapper">
 
 
         <div class="cart-items">
+            <div class="chuatc">
+                <input type="checkbox" id="select-all" class="check-box">
+                <label for="select-all">Chọn tất cả</label>
+            </div>
             {% for item in cart_items %}
             <!-- một checkbox để chọn sản phẩm -->
 
@@ -114,6 +211,52 @@
             <p class="empty-cart">Giỏ hàng trống</p>
             {% endfor %}
         </div>
+        <style>
+            .chuagia {
+                display: flex;
+                max-width: 200px; /* Set maximum width to 100px */
+                overflow-x: auto; /* Enable horizontal scrolling */
+                white-space: nowrap; /* Prevent text wrapping */
+                gap: 15px; /* Space between pricing elements */
+                padding: 5px 5px; /* Add some vertical padding */
+                scrollbar-width: thin; /* For Firefox */
+                
+              }
+              
+              /* Customize scrollbar for webkit browsers */
+              .chuagia::-webkit-scrollbar {
+                height: 8px;
+              }
+              
+              .chuagia::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+              }
+              
+              .chuagia::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
+              }
+              
+              .chuagia::-webkit-scrollbar-thumb:hover {
+                background: #555;
+              }
+              
+              .gia {
+                display: flex;
+                align-items: center;
+                min-width: fit-content; /* Ensure content doesn't get squished */
+              }
+              
+              .lbgia {
+                font-weight: bold;
+                margin-right: 5px;
+              }
+              
+              .price, .total {
+                font-weight: 500;
+              }
+        </style>
 
         <div class="cart-summary">
             <div class="total-price">

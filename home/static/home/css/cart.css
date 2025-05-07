@@ -85,7 +85,7 @@
 }
 
 /* Ẩn checkbox mặc định */
-.cart-item .check-box {
+.check-box {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -100,14 +100,14 @@
 }
 
 /* Thay đổi màu nền khi checkbox được chọn */
-.cart-item .check-box:checked {
+ .check-box:checked {
     background-color: #75e766;
     /* Màu xanh lá trầm */
     border-color: #75e766;
 }
 
 /* Thêm dấu tích (checkmark) khi checkbox được chọn */
-.cart-item .check-box:checked::after {
+.check-box:checked::after {
     content: '';
     position: absolute;
     top: 1px;

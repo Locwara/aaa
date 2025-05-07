@@ -2018,38 +2018,41 @@ def buy_now(request, variant_id):
     if not request.user.is_authenticated:
         messages.error(request, 'Vui lòng đăng nhập để thanh toán')
         return redirect('login')
-    #thử
+    
     try:
         # Lấy variant được chọn
         variant = Productvariant.objects.get(id=variant_id)
-
+        
+        # Lấy số lượng từ tham số URL, mặc định là 1 nếu không có
+        quantity = int(request.GET.get('quantity', 1))
+        
         # Kiểm tra tồn kho
-        if variant.stock < 1:
-            messages.error(request, 'Sản phẩm đã hết hàng')
+        if variant.stock < quantity:
+            messages.error(request, 'Số lượng sản phẩm vượt quá tồn kho')
             return redirect('product_detail', product_id=variant.product.id)
-
+        
         # Lấy user hiện tại
         user = UserClient.objects.get(username=request.user.username)
-
+        
         # Tạo hoặc lấy giỏ hàng
         cart, created = Cart.objects.get_or_create(user_id=user)
-
+        
         # Xóa các item cũ trong giỏ hàng (nếu muốn mua ngay chỉ có 1 sản phẩm)
         cart.items.all().delete()
-
-        # Tạo cart item mới
+        
+        # Tạo cart item mới với số lượng từ tham số URL
         cart_item = CartItem.objects.create(
             cart_id=cart,
             product_variant_id=variant,
-            quantity=1  # Mặc định là 1 sản phẩm
+            quantity=quantity  # Số lượng từ tham số URL
         )
-
+        
         # Lưu ID của cart item vào session để chuyển thẳng đến checkout
         request.session['selected_items'] = [cart_item.id]
-
+        
         # Chuyển hướng đến trang checkout
         return redirect('checkout')
-    # Nếu không tìm thấy variant, thông báo lỗi
+        
     except Productvariant.DoesNotExist:
         messages.error(request, 'Không tìm thấy sản phẩm')
         return redirect('home')

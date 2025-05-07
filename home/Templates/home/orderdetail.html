@@ -142,7 +142,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-column">
-                        <div class="d-flex align-items-center mb-3">
+                        <div class="d-flex align-items-center mb-3 oitem">
                             <div class="me-3">
                                 <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                                     <i class="fas fa-check"></i>
@@ -153,10 +153,19 @@
                                 <small class="text-muted">{{ order.created_at|date:"d/m/Y H:i" }}</small>
                             </div>
                         </div>
-                        
+                        <style>
+                            .oitem{
+                                padding: 0;
+                                margin: 2px !important;
+
+                            }
+                            .ms-3{
+                                margin-left: 20px !important;
+                            }
+                        </style>
                         <div class="ms-3" style="border-left: 2px solid #81c784; height: 20px;"></div>
                         
-                        <div class="d-flex align-items-center mb-3">
+                        <div class="d-flex align-items-center mb-3 oitem">
                             <div class="me-3">
                                 <div class="rounded-circle {% if order.status == 'pending' or order.status == 'accept' or order.status == 'done' %}bg-success{% else %}bg-secondary{% endif %} text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                                     {% if order.status == 'pending' or order.status == 'accept' or order.status == 'done' %}
@@ -174,7 +183,7 @@
                         
                         <div class="ms-3" style="border-left: 2px solid #81c784; height: 20px;"></div>
                         
-                        <div class="d-flex align-items-center mb-3">
+                        <div class="d-flex align-items-center mb-3 oitem">
                             <div class="me-3">
                                 <div class="rounded-circle {% if order.status == 'accept' or order.status == 'done' %}bg-success{% else %}bg-secondary{% endif %} text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                                     {% if order.status == 'accept' or order.status == 'done' %}
@@ -192,7 +201,7 @@
                         
                         <div class="ms-3" style="border-left: 2px solid #81c784; height: 20px;"></div>
                         
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center oitem" >
                             <div class="me-3">
                                 <div class="rounded-circle {% if order.status == 'done' %}bg-success{% else %}bg-secondary{% endif %} text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                                     {% if order.status == 'done' %}

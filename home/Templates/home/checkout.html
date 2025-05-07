@@ -72,6 +72,54 @@
                         {% endfor %}
                     </div>
                     <style>
+                        .order-items {
+                            max-height: 250px;
+                            overflow-y: auto;
+                            padding-right: 10px; /* Thêm padding để tránh nội dung bị che bởi thanh cuộn */
+                          }
+                          
+                          /* Tùy chỉnh thanh cuộn cho trình duyệt hỗ trợ webkit */
+                          .order-items::-webkit-scrollbar {
+                            width: 6px;
+                          }
+                          
+                          .order-items::-webkit-scrollbar-track {
+                            background: #f1f1f1;
+                            border-radius: 10px;
+                          }
+                          
+                          .order-items::-webkit-scrollbar-thumb {
+                            background: #888;
+                            border-radius: 10px;
+                          }
+                          
+                          .order-items::-webkit-scrollbar-thumb:hover {
+                            background: #555;
+                          }
+                          
+                          /* Tùy chỉnh thanh cuộn cho Firefox */
+                          .order-items {
+                            scrollbar-width: thin;
+                            scrollbar-color: #888 #f1f1f1;
+                          }
+                          
+                          /* Tùy chỉnh hiển thị sản phẩm để nhìn gọn gàng hơn */
+                          .order-items .d-flex {
+                            border-bottom: 1px solid #f1f1f1;
+                            padding-bottom: 10px;
+                            padding-top: 10px;
+                          }
+                          
+                          .order-items .d-flex:last-child {
+                            border-bottom: none;
+                          }
+                          
+                          /* Tùy chỉnh kích thước ảnh sản phẩm */
+                          .order-items img {
+                            max-height: 50px;
+                            width: auto;
+                            object-fit: contain;
+                          }
                         img{
                             width: 100px;
                             height: 100px;

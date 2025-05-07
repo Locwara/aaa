@@ -99,7 +99,7 @@
                 </div>
                 <div class="card-body">
                     <p><strong>Ngày đặt:</strong> {{ order.created_at|date:"d/m/Y H:i" }}</p>
-                    <p><strong>Tổng tiền:</strong> {{ order.total_amount|floatformat:0 }}₫</p>
+                    <p><strong>Tổng tiền:</strong> {{ order.total_amount|vn_currency  }}₫</p>
                     <p><strong>Phương thức thanh toán:</strong> {{ order.payment_method }}</p>
                     {% if order.address %}
                     <p><strong>Địa chỉ:</strong> {{ order.address.street }}, {{ order.address.ward }}, {{ order.address.district }}, {{ order.address.city }}</p>

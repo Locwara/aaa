@@ -330,10 +330,8 @@
         }
         
         const variantId = currentVariant.id;
+        const quantity = parseInt(document.getElementById('quantity').value);
         
-        // Chuyển hướng đến trang mua ngay với variant đã chọn
-        var a = [9, 5, 7, 3, 6]
-        a.sort()
-        console.log(a)
-        window.location.href = `/login-client/buy-now/${variantId}`;
+        // Chuyển hướng đến trang mua ngay với variant đã chọn và số lượng
+        window.location.href = `/login-client/buy-now/${variantId}?quantity=${quantity}`;
     }
